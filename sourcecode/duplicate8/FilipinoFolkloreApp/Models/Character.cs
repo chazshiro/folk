@@ -1,0 +1,23 @@
+﻿using SQLite;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FilipinoFolkloreApp.Models
+{
+    public class Character
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string name { get; set; } = "";
+        public string currentavatar { get; set; } = "";
+        public int points { get; set; }
+        public int stars { get; set; } = 0;
+
+        public string selectedNarrator { get; set; } = "tarsier"; 
+        public int narratorBattery { get; set; } = 3; 
+        public DateTime lastNarratorUseTime { get; set; } = DateTime.MinValue;
+    }
+}

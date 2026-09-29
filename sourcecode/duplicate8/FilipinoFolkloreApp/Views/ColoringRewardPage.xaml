@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FilipinoFolkloreApp.Views.ColoringRewardPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundImageSource="reward_bg.jpg"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <Border BackgroundColor="#66000000" 
+                StrokeShape="RoundRectangle 24"
+                Padding="26" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center">
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Image x:Name="MedalImage" 
+                       Source="ui/badge.png" 
+                       HeightRequest="150"/>
+                <HorizontalStackLayout x:Name="RewardText" HorizontalOptions="Center" Spacing="8">
+                    <Label x:Name="RewardLabel" 
+                           Text="20" 
+                           FontAttributes="Bold" 
+                           FontSize="28" 
+                           TextColor="White" 
+                           VerticalOptions="Center"/>
+                    <Image x:Name="RewardStarIcon" 
+                           Source="icon_star_yellow.png" 
+                           HeightRequest="28" 
+                           WidthRequest="28" 
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <Button x:Name="OkButton" 
+                        Text="OK" 
+                        Clicked="OnRewardOk"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

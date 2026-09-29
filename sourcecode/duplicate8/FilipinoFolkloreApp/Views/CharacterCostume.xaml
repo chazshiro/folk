@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FilipinoFolkloreApp.Views.CharacterCostume"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="CharacterCostume"
+             BackgroundImageSource="avatar_bg.jpg"
+             Shell.NavBarIsVisible="False">
+
+    <Grid>
+
+        <Grid x:Name="MainGrid"
+              RowDefinitions="Auto, *, Auto"
+              ColumnDefinitions="*, Auto"
+              Padding="8,8,8,16"
+              ColumnSpacing="8"
+              RowSpacing="8"
+              HorizontalOptions="Center"
+              VerticalOptions="Center">
+
+            <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center"
+                  RowSpacing="8">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Padding="8" BackgroundColor="SkyBlue" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16"/>
+                    </Border.StrokeShape>
+
+                    <StackLayout Spacing="8">
+
+                        <Grid ColumnDefinitions="Auto,Auto"
+                              ColumnSpacing="0"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center">
+
+                            <!-- Outer frame (was your first Frame) -->
+                            <Frame Padding="16,8"
+                                   BackgroundColor="DeepPink"
+                                   BorderColor="Transparent"
+                                   CornerRadius="16"
+                                   HasShadow="False"
+                                   Margin="0">
+
+                                <!-- Grid: left = name, middle = filler, right = nested stars frame -->
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                                    <!-- Player / Current user name (bound) -->
+                                    <Label Text="{Binding CurrentUserName}"
+                                       FontSize="Small"
+                                       TextColor="White"
+                                       VerticalTextAlignment="Center"
+                                       VerticalOptions="Center" />
+
+                                    <!-- flexible spacer so right frame stays to the far right -->
+                                    <BoxView Grid.Column="1" Opacity="0" />
+
+                                    <!-- Nested frame (keeps the same properties the 'second frame' had) -->
+                                    <Frame Grid.Column="2"
+                                           Padding="16,8"
+                                           BackgroundColor="SkyBlue"
+                                           BorderColor="black"
+                                           CornerRadius="16"
+                                           HasShadow="False"
+                                           ZIndex="1"
+                                           VerticalOptions="Center">
+
+                                        <!-- inner grid for number + star image -->
+                                        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                                            <Label x:Name="PilonStarNicholLabel"
+                                                   Text="300"
+                                                   FontSize="Small"
+                                                   TextColor="Yellow"
+                                                   VerticalTextAlignment="Center"
+                                                   VerticalOptions="Center" />
+                                            <Image Grid.Column="1"
+                                                   Source="icon_star_yellow.png"
+                                                   WidthRequest="18"
+                                                   HeightRequest="18"
+                                                   Aspect="AspectFit"
+                                                   VerticalOptions="Center" />
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
+                            </Frame>
+
+                        </Grid>
+
+                        <Image x:Name="CharacterImage"
+                               Source="avatarcustomization/defaultavatar.png"
+                               WidthRequest="140"
+                               HeightRequest="200"
+                               Aspect="AspectFit"/>
+                    </StackLayout>
+                </Border>
+
+                <Button Grid.Row="1"
+                        x:Name="BuyButton"
+                        Text="NAKA-SUOT"
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"
+                        CornerRadius="22"
+                        BackgroundColor="SeaGreen"
+                        TextColor="yellow"
+                        Clicked="OnBuyButtonClicked">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,8"
+                                Radius="8"
+                                Opacity="0.5"/>
+                    </Button.Shadow>
+                </Button>
+            </Grid>
+
+            <!-- Right side and CollectionView unchanged -->
+            <Border Grid.Row="0" 
+                    Grid.Column="1"
+                    Grid.RowSpan="3"
+                    Padding="8"
+                    BackgroundColor="#4D87CEFA"
+                    StrokeThickness="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16"/>
+                </Border.StrokeShape>
+
+                <StackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+                        <Frame Grid.ColumnSpan="2"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="8"
+                               BackgroundColor="LightGray"
+                               BorderColor="Black"
+                               CornerRadius="12"
+                               HasShadow="True">
+                            <Label Text="TAPIS"
+                                   TextColor="DeepPink"
+                                   FontAttributes="Bold"
+                                   FontSize="Large"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"/>
+                        </Frame>
+
+                        <ImageButton x:Name="HomeButton"
+                                     Grid.Column="1"
+                                     Source="icon_home.png"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="Center"
+                                     WidthRequest="36"
+                                     HeightRequest="36"
+                                     Aspect="AspectFit"
+                                     Clicked="OnHomeButtonClicked" />
+                    </Grid>
+
+                    <CollectionView x:Name="TapisCollectionView"
+                                    ItemsSource="{Binding TapisItems}"
+                                    SelectionMode="Single"
+                                    SelectionChanged="OnTapisSelected">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Span="3" Orientation="Vertical"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="8">
+
+                                    <!-- MAIN CARD -->
+                                    <Border BackgroundColor="White"
+                                        StrokeThickness="2"
+                                        Stroke="Transparent">
+
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="DeepPink"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="12"/>
+                                        </Border.StrokeShape>
+                                    </Border>
+
+                                    <Image Source="{Binding TapisImageSource}"
+                                           WidthRequest="72"
+                                           HeightRequest="112"
+                                           Aspect="AspectFit"/>
+
+                                    <!-- PRICE BADGE -->
+                                    <Frame Padding="6,4"
+                                           CornerRadius="12"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="End"
+                                           TranslationY="-4"
+                                           HasShadow="False"
+                                           BackgroundColor="DeepPink">
+
+                                        <!-- Switch the badge background -->
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding IsPurchased}"
+                                                         Value="True">
+                                                <Setter Property="BackgroundColor" Value="SeaGreen"/>
+                                            </DataTrigger>
+                                        </Frame.Triggers>
+
+                                        <!-- ✅ Only ONE Content (Grid) -->
+                                        <Grid>
+
+                                            <!-- PRICE (shown when NOT purchased) -->
+                                            <StackLayout x:Name="PriceBadge"
+                                                         Orientation="Horizontal"
+                                                         Spacing="6"
+                                                         IsVisible="True">
+                                                <Label Text="{Binding Price}"
+                                                       TextColor="Yellow"
+                                                       FontSize="12"
+                                                       VerticalTextAlignment="Center" />
+                                                <Image Source="icon_star_yellow.png"
+                                                       WidthRequest="14"
+                                                       HeightRequest="14"
+                                                       Aspect="AspectFit"
+                                                       VerticalOptions="Center" />
+                                            </StackLayout>
+
+                                            <!-- OWNED (shown when purchased) -->
+                                            <Label x:Name="OwnedBadge"
+                                                   Text="NABILI"
+                                                   FontSize="11"
+                                                   TextColor="White"
+                                                   FontAttributes="Bold"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"
+                                                   IsVisible="False" />
+
+                                            <!-- Toggle which one is visible -->
+                                            <Grid.Triggers>
+                                                <DataTrigger TargetType="Grid"
+                                                             Binding="{Binding IsPurchased}"
+                                                             Value="True">
+                                                    <Setter TargetName="PriceBadge" Property="IsVisible" Value="False"/>
+                                                    <Setter TargetName="OwnedBadge" Property="IsVisible" Value="True"/>
+                                                </DataTrigger>
+                                            </Grid.Triggers>
+
+                                        </Grid>
+                                    </Frame>
+
+
+
+                                </Grid>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Border>
+
+        </Grid>
+
+        <!-- INLINE GAME ALERT OVERLAY -->
+        <Grid x:Name="GameAlertOverlay"
+              IsVisible="False"
+              Opacity="0"
+              BackgroundColor="#40000000"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill"
+              Grid.RowSpan="3"
+              Grid.ColumnSpan="2">
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAlertBackgroundTapped" />
+            </Grid.GestureRecognizers>
+
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame x:Name="GameAlertCard"
+                       CornerRadius="20"
+                       Padding="20"
+                       HasShadow="True"
+                       BorderColor="Transparent"
+                       BackgroundColor="#B3FFFFFF"
+                       WidthRequest="360"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Scale="0.96">
+
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
+
+                        <Image x:Name="AlertEmoji"
+                               Source="emoji_sad.png"
+                               WidthRequest="72"
+                               HeightRequest="72"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center" />
+
+                        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                            <Frame CornerRadius="22"
+                                   Padding="8"
+                                   HasShadow="False"
+                                   BackgroundColor="#60EFFF"
+                                   HorizontalOptions="Center"
+                                   MinimumWidthRequest="72">
+
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="6" 
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center">
+
+
+                                    <Label x:Name="AlertAmountLabel"
+                                           Text="0"
+                                           FontSize="22"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center" />
+                                    <Image Source="icon_star_yellow.png"
+                                           WidthRequest="18"
+                                           HeightRequest="18"
+                                           VerticalOptions="Center"
+                                           Aspect="AspectFit" />
+                                </StackLayout>
+
+                            </Frame>
+                        </Grid>
+
+                        <Label x:Name="AlertMessageLabel"
+                               Text="Kulang ang iyong Pilon Star!"
+                               FontSize="16"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#333333"
+                               Margin="6,0,6,0" />
+
+                        <Button x:Name="AlertOkButton"
+                                Text="OK"
+                                FontAttributes="Bold"
+                                CornerRadius="18"
+                                HeightRequest="44"
+                                WidthRequest="120"
+                                BackgroundColor="#00A6FF"
+                                TextColor="White"
+                                Clicked="OnAlertOkClicked"
+                                HorizontalOptions="Center" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <!-- Tutorial Overlay -->
+        <AbsoluteLayout x:Name="TutorialOverlay" 
+                        IsVisible="False">
+
+            <!-- Semi-transparent background -->
+            <BoxView BackgroundColor="#99000000"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTutorialNextStep" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <!-- Tarsier Character - Left Side -->
+            <Image x:Name="TarsierImage" 
+                   Source="elements/tarsier.png"
+                   WidthRequest="150"
+                   HeightRequest="150"
+                   Opacity="0"
+                   Scale="0.8"
+                   AbsoluteLayout.LayoutBounds="30,80,150,150"
+                   AbsoluteLayout.LayoutFlags="None" />
+
+            <!-- Speech Bubble Container - Upper Right of Tarsier -->
+            <Grid x:Name="SpeechBubbleContainer" 
+                  Opacity="0"
+                  Scale="0.9"
+                  AbsoluteLayout.LayoutBounds="200,50,350,AutoSize"
+                  AbsoluteLayout.LayoutFlags="None">
+
+                <Border BackgroundColor="White"
+                        StrokeShape="RoundRectangle 15">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" 
+                                Offset="3,3" 
+                                Radius="8" 
+                                Opacity="0.3" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Padding="15" Spacing="8">
+                        <Label x:Name="TutorialTitleLabel"
+                               Text="Maligayang pagdating!"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#FF1493"
+                               HorizontalOptions="Center" />
+
+                        <Label x:Name="TutorialMessageLabel"
+                               Text="Ako si Tarsy, ang iyong gabay! Tulungan kitang magsimula."
+                               FontSize="14"
+                               TextColor="#333333"
+                               HorizontalTextAlignment="Start"
+                               LineBreakMode="WordWrap" />
+
+                        <Label x:Name="TutorialProgressLabel"
+                               Text="1/6"
+                               FontSize="12"
+                               TextColor="#666666"
+                               HorizontalOptions="End"
+                               Margin="0,0,0,5" />
+
+                        <HorizontalStackLayout Spacing="15" 
+                                               HorizontalOptions="End"
+                                               Margin="0,10,0,0">
+                            <Button x:Name="PrevTutorialButton"
+                                 Text="Bumalik"
+                                 BackgroundColor="#FF6B6B"
+                                 TextColor="White"
+                                 FontAttributes="Bold"
+                                 FontSize="12"
+                                 CornerRadius="15"
+                                 Padding="15,5"
+                                 HeightRequest="35"
+                                 Clicked="OnTutorialPrevStep" />
+                            <Button x:Name="NextTutorialButton"
+                                    Text="Susunod"
+                                    BackgroundColor="#00A6FF"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="12"
+                                    CornerRadius="15"
+                                    Padding="15,5"
+                                    HeightRequest="35"
+                                    Clicked="OnTutorialNextStep" />
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Arrow Pointer (Points to specific elements dynamically) -->
+            <Image x:Name="ArrowPointer"
+                   Source="arrow_pointer.png"
+                   WidthRequest="50"
+                   HeightRequest="50"
+                   Opacity="0"
+                   Scale="0.8"
+                   AbsoluteLayout.LayoutBounds="0,0,50,50"
+                   AbsoluteLayout.LayoutFlags="None" />
+        </AbsoluteLayout>
+
+    </Grid>
+</ContentPage>

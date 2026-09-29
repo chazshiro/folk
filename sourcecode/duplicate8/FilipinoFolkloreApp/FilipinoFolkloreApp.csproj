@@ -1,0 +1,760 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>FilipinoFolkloreApp</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>FilipinoFolkloreApp</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.filipinofolkloreapp</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
+		<WindowsPackageType>None</WindowsPackageType>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <DebugSymbols>False</DebugSymbols>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <DebugSymbols>True</DebugSymbols>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<!--<MauiSplashScreen Include="Resources\Splash\splash.jpg" Color="#512BD4" />-->
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\values\launch_background.xml" />
+	  <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\avatarcustomization\avatar1\avatar1_blue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar1\avatar1_bluered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar1\avatar1_red.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar1\avatar1_whiteblue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar1\avatar1_whitered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar2\avatar2_blue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar2\avatar2_bluered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar2\avatar2_red.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar2\avatar2_whiteblue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar2\avatar2_whitered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar3\avatar3.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar3\avatar3_white.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar3\avatar3_whiteblack.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar3\avatar3_whitegreen.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar3\avatar3_whiteorange.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar3\avatar3_whitered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar4\avatar4.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar4\avatar4_white.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar4\avatar4_whiteblack.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar4\avatar4_whitegreen.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar4\avatar4_whiteorange.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar4\avatar4_whitered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar_blue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar_bluered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar_green.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar_pink.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar_red.png" />
+	  <None Remove="Resources\Images\avatarcustomization\avatar_white.png" />
+	  <None Remove="Resources\Images\avatarcustomization\defaultavatar.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\bblue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\bbluered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\bred.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\bwhiteblue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\bwhitered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\gwhite.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\gwhiteblack.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\gwhitegreen.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\gwhiteorange.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis\gwhitered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis_blue.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis_bluered.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis_green.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis_pink.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis_red.png" />
+	  <None Remove="Resources\Images\avatarcustomization\tapis_white.png" />
+	  <None Remove="Resources\Images\bg\avatar_bg.jpg" />
+	  <None Remove="Resources\Images\bg\char_choicebg.jpg" />
+	  <None Remove="Resources\Images\bg\homepage_bg.jpg" />
+	  <None Remove="Resources\Images\bg\login_bg.jpg" />
+	  <None Remove="Resources\Images\bg\narator_bg.jpg" />
+	  <None Remove="Resources\Images\bg\reward_bg.jpg" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon1.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon10.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon11.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon12.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon13.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon2.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon3.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon4.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon5.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon6.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon7.png" />
+	  <None Remove="Resources\Images\coloring\thumbnail\drawingicon8.png" />
+	  <None Remove="Resources\Images\elements\close.png" />
+	  <None Remove="Resources\Images\elements\eagle.png" />
+	  <None Remove="Resources\Images\elements\lock.png" />
+	  <None Remove="Resources\Images\elements\monkey.png" />
+	  <None Remove="Resources\Images\elements\next.png" />
+	  <None Remove="Resources\Images\elements\pause.png" />
+	  <None Remove="Resources\Images\elements\play.png" />
+	  <None Remove="Resources\Images\elements\prev.png" />
+	  <None Remove="Resources\Images\keys\erase.png" />
+	  <None Remove="Resources\Images\medals\badgealamataftermakabasang3story.png" />
+	  <None Remove="Resources\Images\medals\badgealamatngalimango.png" />
+	  <None Remove="Resources\Images\medals\badgealamatngbahaghari.png" />
+	  <None Remove="Resources\Images\medals\badgealamatngbuwanarawatmgabituin.png" />
+	  <None Remove="Resources\Images\medals\badgealamatngpinya.png" />
+	  <None Remove="Resources\Images\medals\badgeangaralkayloro.png" />
+	  <None Remove="Resources\Images\medals\badgebantugan.png" />
+	  <None Remove="Resources\Images\medals\badgebugtongmatalinongbata.png" />
+	  <None Remove="Resources\Images\medals\badgehinilawod.png" />
+	  <None Remove="Resources\Images\medals\badgeibalon.png" />
+	  <None Remove="Resources\Images\medals\badgekabayoatkalabaw.png" />
+	  <None Remove="Resources\Images\medals\badgekunehoatpagong.png" />
+	  <None Remove="Resources\Images\medals\badgekungbakitmayulan.png" />
+	  <None Remove="Resources\Images\medals\badgemanimimbin.png" />
+	  <None Remove="Resources\Images\medals\badgemasiglangmagkulay.png" />
+	  <None Remove="Resources\Images\medals\badgengmaliwanagnakamay.png" />
+	  <None Remove="Resources\Images\medals\badgepagongatmatsing.png" />
+	  <None Remove="Resources\Images\medals\badgeparasaunangpagbusogngnarrator.png" />
+	  <None Remove="Resources\Images\medals\badgepinakamakulaynabata.png" />
+	  <None Remove="Resources\Images\medals\badgetamalahatngbugtong.png" />
+	  <None Remove="Resources\Images\medals\badgetudbulul.png" />
+	  <None Remove="Resources\Images\medals\badgetularansikawayan.png" />
+	  <None Remove="Resources\Images\medals\specialbadgepabula.png" />
+	  <None Remove="Resources\Images\narratorassets\food\apple.png" />
+	  <None Remove="Resources\Images\narratorassets\food\banana.png" />
+	  <None Remove="Resources\Images\narratorassets\food\grass.png" />
+	  <None Remove="Resources\Images\narratorassets\food\guava.png" />
+	  <None Remove="Resources\Images\narratorassets\food\sugarcane.png" />
+	  <None Remove="Resources\Images\narratorassets\narratortree.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\iconalamatngalimango.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari1.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari2.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari3.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari4.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari5.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari6.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari7.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari8.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari9.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngbahaghari\iconalamatngbahaghari.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\iconalamatngpinya.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\iconbatmayarawbuwanatbituin.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan1.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan2.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan3.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan4.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan5.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan6.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\bantugan7.png" />
+	  <None Remove="Resources\Images\storiesepiko\bantugan\iconbantugan.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\hinilawod1.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\hinilawod2.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\hinilawod3.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\hinilawod4.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\hinilawod5.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\hinilawod6.png" />
+	  <None Remove="Resources\Images\storiesepiko\hinilawod\iconhinilawod.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon1.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon10.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon11.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon12.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon2.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon3.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon4.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon5.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon6.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon7.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon8.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\ibalon9.png" />
+	  <None Remove="Resources\Images\storiesepiko\ibalon\iconibalon.png" />
+	  <None Remove="Resources\Images\storiesepiko\manimimbin\iconmanimimbin.png" />
+	  <None Remove="Resources\Images\storiesepiko\manimimbin\manimimbin1.png" />
+	  <None Remove="Resources\Images\storiesepiko\manimimbin\manimimbin2.png" />
+	  <None Remove="Resources\Images\storiesepiko\manimimbin\manimimbin3.png" />
+	  <None Remove="Resources\Images\storiesepiko\manimimbin\manimimbin4.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\icontudbulul.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul1.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul2.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul3.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul4.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul5.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul6.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul7.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul8.png" />
+	  <None Remove="Resources\Images\storiesepiko\tudbulul\tudbulul9.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro1.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro10.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro2.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro3.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro4.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro5.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro6.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro7.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro8.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\angaralkayloro9.png" />
+	  <None Remove="Resources\Images\storiespabula\angaralkayloro\iconangaralkayloro.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw1.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw10.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw2.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw3.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw4.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw5.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw6.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw7.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw8.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw9.png" />
+	  <None Remove="Resources\Images\storiespabula\angkabayoatkalabaw\iconangkabayoatkalabaw.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\iconpagongatkuneho.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho1.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho13.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho2.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho3.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho4.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho5.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho6.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho7.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho8.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\iconpagongatmatsing.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing1.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing10.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing11.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing12.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing13.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing14.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing15.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing16.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing17.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing18.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing19.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing2.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing20.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing21.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing3.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing4.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing5.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing6.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing7.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing8.png" />
+	  <None Remove="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing9.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho1.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho10.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho11.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho12.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho13.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho14.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho15.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho16.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho2.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho3.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho4.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho5.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho6.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho7.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho8.png" />
+	  <None Remove="Resources\Images\storiespabula\pagong_at_kuneho9.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\icontularansikawayan.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan1.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan10.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan2.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan3.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan4.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan5.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan6.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan7.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan8.png" />
+	  <None Remove="Resources\Images\storiespabula\tularansikawayan\tularansikawayan9.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango1.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango2.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango3.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango4.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango5.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango6.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango7.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango8.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango9.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya1.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya10.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya11.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya12.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya13.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya14.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya2.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya3.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya4.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya5.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya6.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya7.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya8.png" />
+	  <None Remove="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya9.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin1.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin10.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin11.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin12.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin2.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin3.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin4.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin5.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin6.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin7.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin8.png" />
+	  <None Remove="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin9.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan1.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan10.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan2.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan3.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan4.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan5.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan6.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan7.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan8.png" />
+	  <None Remove="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan9.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.1" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\AlamatPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AvatarSelectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BugtongListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BugtongQuizPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CharacterCostume.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ColoringCollectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ColoringPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ColoringRewardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ColoringSelectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CreditsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Home\IndexPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MedalDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MedalPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MgaLaroPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NarratorDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NarratorManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NarratorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\QuizPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RewardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Platforms\Android\Resources\mipmap\" />
+	  <Folder Include="Views\NewFolder\" />
+	  <Folder Include="Views\Popup\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar1\avatar1.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar1\avatar1_blue.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar1\avatar1_bluered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar1\avatar1_red.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar1\avatar1_whiteblue.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar1\avatar1_whitered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar2\avatar2.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar2\avatar2_blue.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar2\avatar2_bluered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar2\avatar2_red.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar2\avatar2_whiteblue.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar2\avatar2_whitered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar3\avatar3.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar3\avatar3_white.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar3\avatar3_whiteblack.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar3\avatar3_whitegreen.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar3\avatar3_whiteorange.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar3\avatar3_whitered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar4\avatar4.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar4\avatar4_white.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar4\avatar4_whiteblack.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar4\avatar4_whitegreen.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar4\avatar4_whiteorange.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\avatar4\avatar4_whitered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\bblue.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\bbluered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\bred.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\bwhiteblue.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\bwhitered.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\gwhite.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\gwhiteblack.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\gwhitegreen.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\gwhiteorange.png" />
+	  <MauiImage Include="Resources\Images\avatarcustomization\tapis\gwhitered.png" />
+	  <MauiImage Include="Resources\Images\bg\avatar_bg.jpg" />
+	  <MauiImage Include="Resources\Images\bg\char_choicebg.jpg" />
+	  <MauiImage Include="Resources\Images\bg\homepage_bg.jpg" />
+	  <MauiImage Include="Resources\Images\bg\login_bg.jpg" />
+	  <MauiImage Include="Resources\Images\bg\narator_bg.jpg" />
+	  <MauiImage Include="Resources\Images\bg\reward_bg.jpg" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon9.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon1.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon10.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon11.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon12.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon13.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon2.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon3.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon4.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon5.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon6.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon7.png" />
+	  <MauiImage Include="Resources\Images\coloring\thumbnail\drawingicon8.png" />
+	  <MauiImage Include="Resources\Images\elements\close.png" />
+	  <MauiImage Include="Resources\Images\elements\eagle.png" />
+	  <MauiImage Include="Resources\Images\elements\lock.png" />
+	  <MauiImage Include="Resources\Images\elements\monkey.png" />
+	  <MauiImage Include="Resources\Images\elements\next.png" />
+	  <MauiImage Include="Resources\Images\elements\pause.png" />
+	  <MauiImage Include="Resources\Images\elements\play.png" />
+	  <MauiImage Include="Resources\Images\elements\prev.png" />
+	  <MauiImage Include="Resources\Images\keys\a.png" />
+	  <MauiImage Include="Resources\Images\keys\b.png" />
+	  <MauiImage Include="Resources\Images\keys\c.png" />
+	  <MauiImage Include="Resources\Images\keys\d.png" />
+	  <MauiImage Include="Resources\Images\keys\e.png" />
+	  <MauiImage Include="Resources\Images\keys\erase.png" />
+	  <MauiImage Include="Resources\Images\keys\f.png" />
+	  <MauiImage Include="Resources\Images\keys\g.png" />
+	  <MauiImage Include="Resources\Images\keys\h.png" />
+	  <MauiImage Include="Resources\Images\keys\i.png" />
+	  <MauiImage Include="Resources\Images\keys\j.png" />
+	  <MauiImage Include="Resources\Images\keys\k.png" />
+	  <MauiImage Include="Resources\Images\keys\l.png" />
+	  <MauiImage Include="Resources\Images\keys\m.png" />
+    <MauiImage Include="Resources\Images\keys\n.png" />
+	  <MauiImage Include="Resources\Images\keys\o.png" />
+    <MauiImage Include="Resources\Images\keys\p.png" />
+    <MauiImage Include="Resources\Images\keys\q.png" />
+    <MauiImage Include="Resources\Images\keys\r.png" />
+    <MauiImage Include="Resources\Images\keys\s.png" />
+	  <MauiImage Include="Resources\Images\keys\t.png" />
+    <MauiImage Include="Resources\Images\keys\u.png" />
+    <MauiImage Include="Resources\Images\keys\v.png" />
+    <MauiImage Include="Resources\Images\keys\w.png" />
+    <MauiImage Include="Resources\Images\keys\x.png" />
+    <MauiImage Include="Resources\Images\keys\y.png" />
+    <MauiImage Include="Resources\Images\keys\z.png" />
+    <MauiImage Include="Resources\Images\keys\ok.png" />
+
+		<!--avatar-->
+
+		<!---background-->
+    <MauiImage Include="Resources\Images\bg\selectionpage.jpg" />
+    <MauiImage Include="Resources\Images\bg\image4.jpg" />
+
+    <!---elements-->
+    <MauiImage Include="Resources\Images\elements\star.png" />
+    <MauiImage Include="Resources\Images\elements\tarsier.png" />
+    <MauiImage Include="Resources\Images\elements\pluss.png" />
+    <MauiImage Include="Resources\Images\medals\badgealamataftermakabasang3story.png" />
+    <MauiImage Include="Resources\Images\medals\badgealamatngalimango.png" />
+    <MauiImage Include="Resources\Images\medals\badgealamatngbahaghari.png" />
+    <MauiImage Include="Resources\Images\medals\badgealamatngbuwanarawatmgabituin.png" />
+    <MauiImage Include="Resources\Images\medals\badgealamatngpinya.png" />
+    <MauiImage Include="Resources\Images\medals\badgeangaralkayloro.png" />
+    <MauiImage Include="Resources\Images\medals\badgebantugan.png" />
+    <MauiImage Include="Resources\Images\medals\badgebugtongmahusaynatagahula.png" />
+    <MauiImage Include="Resources\Images\medals\badgebugtongmatalinongbata.png" />
+    <MauiImage Include="Resources\Images\medals\badgehinilawod.png" />
+    <MauiImage Include="Resources\Images\medals\badgeibalon.png" />
+    <MauiImage Include="Resources\Images\medals\badgekabayoatkalabaw.png" />
+    <MauiImage Include="Resources\Images\medals\badgekunehoatpagong.png" />
+    <MauiImage Include="Resources\Images\medals\badgekungbakitmayulan.png" />
+    <MauiImage Include="Resources\Images\medals\badgemanimimbin.png" />
+    <MauiImage Include="Resources\Images\medals\badgemasiglangmagkulay.png" />
+    <MauiImage Include="Resources\Images\medals\badgengmaliwanagnakamay.png" />
+    <MauiImage Include="Resources\Images\medals\badgepagongatmatsing.png" />
+    <MauiImage Include="Resources\Images\medals\badgeparasaunangpagbusogngnarrator.png" />
+    <MauiImage Include="Resources\Images\medals\badgepinakamakulaynabata.png" />
+    <MauiImage Include="Resources\Images\medals\badgetamalahatngbugtong.png" />
+    <MauiImage Include="Resources\Images\medals\badgetudbulul.png" />
+    <MauiImage Include="Resources\Images\medals\badgetularansikawayan.png" />
+    <MauiImage Include="Resources\Images\medals\specialbadgepabula.png" />
+    <MauiImage Include="Resources\Images\narratorassets\batteryempty.png" />
+    <MauiImage Include="Resources\Images\narratorassets\batteryfull.png" />
+    <MauiImage Include="Resources\Images\narratorassets\batteryquarter.png" />
+    <MauiImage Include="Resources\Images\narratorassets\batterythreequarters.png" />
+    <MauiImage Include="Resources\Images\narratorassets\food\apple.png" />
+    <MauiImage Include="Resources\Images\narratorassets\food\banana.png" />
+    <MauiImage Include="Resources\Images\narratorassets\food\grass.png" />
+    <MauiImage Include="Resources\Images\narratorassets\food\guava.png" />
+    <MauiImage Include="Resources\Images\narratorassets\food\sugarcane.png" />
+    <MauiImage Include="Resources\Images\narratorassets\narratortree.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\iconalamatngalimango.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari1.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari2.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari3.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari4.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari5.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari6.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari7.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari8.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\alamatngbahaghari9.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngbahaghari\iconalamatngbahaghari.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\iconalamatngpinya.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\iconbatmayarawbuwanatbituin.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\iconkungbakitmayulan.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan1.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan2.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan3.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan4.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan5.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan6.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\bantugan7.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\bantugan\iconbantugan.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\hinilawod1.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\hinilawod2.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\hinilawod3.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\hinilawod4.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\hinilawod5.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\hinilawod6.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\hinilawod\iconhinilawod.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon1.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon10.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon11.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon12.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon2.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon3.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon4.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon5.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon6.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon7.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon8.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\ibalon9.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\ibalon\iconibalon.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\manimimbin\iconmanimimbin.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\manimimbin\manimimbin1.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\manimimbin\manimimbin2.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\manimimbin\manimimbin3.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\manimimbin\manimimbin4.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\icontudbulul.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul1.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul2.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul3.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul4.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul5.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul6.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul7.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul8.png" />
+    <MauiImage Include="Resources\Images\storiesepiko\tudbulul\tudbulul9.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro1.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro10.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro2.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro3.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro4.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro5.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro6.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro7.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro8.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\angaralkayloro9.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angaralkayloro\iconangaralkayloro.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw1.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw10.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw2.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw3.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw4.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw5.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw6.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw7.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw8.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\angkabayoatkalabaw9.png" />
+    <MauiImage Include="Resources\Images\storiespabula\angkabayoatkalabaw\iconangkabayoatkalabaw.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\iconpagongatkuneho.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho1.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho10.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho11.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho12.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho13.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho14.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho15.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho16.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho2.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho3.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho4.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho5.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho6.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho7.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho8.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatkuneho\pagongatkuneho9.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\iconpagongatmatsing.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing1.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing10.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing11.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing12.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing13.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing14.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing15.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing16.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing17.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing18.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing19.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing2.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing20.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing21.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing3.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing4.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing5.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing6.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing7.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing8.png" />
+    <MauiImage Include="Resources\Images\storiespabula\pagongatmatsing\pagongatmatsing9.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\icontularansikawayan.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan1.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan10.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan2.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan3.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan4.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan5.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan6.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan7.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan8.png" />
+    <MauiImage Include="Resources\Images\storiespabula\tularansikawayan\tularansikawayan9.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango1.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango2.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango3.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango4.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango5.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango6.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango7.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango8.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngalimango\alamatngalimango9.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya1.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya10.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya11.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya12.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya13.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya14.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya2.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya3.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya4.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya5.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya6.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya7.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya8.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\alamatngpinya\alamatngpinya9.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin1.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin10.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin11.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin12.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin2.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin3.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin4.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin5.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin6.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin7.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin8.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\batmayarawbuwanatbituin\batmayarawbuwanatbituin9.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan1.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan10.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan2.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan3.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan4.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan5.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan6.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan7.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan8.png" />
+    <MauiImage Include="Resources\Images\storiesalamat\kungbakitmayulan\kungbakitmayulan9.png" />
+	</ItemGroup>
+
+</Project>
